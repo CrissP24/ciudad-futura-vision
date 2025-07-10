@@ -70,6 +70,13 @@ export function LoginForm() {
     }));
   };
 
+  const loadCredentials = () => {
+    setFormData({
+      username: cityInfo.defaultUser.username,
+      password: cityInfo.defaultUser.password
+    });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-8">
       {/* Fondo con imagen de la ciudad */}
@@ -166,17 +173,35 @@ export function LoginForm() {
               </Button>
             </form>
 
-            {/* Credenciales de prueba */}
+            {/* Credenciales de acceso */}
             <div className="pt-4 border-t border-white/10">
-              <h4 className="text-sm font-medium text-muted-foreground mb-2">
-                Credenciales de prueba:
-              </h4>
-              <div className="space-y-1 text-xs text-muted-foreground">
-                <div>Usuario: <span className="text-primary font-mono">admin</span></div>
-                <div>
-                  Contraseña: <span className="text-primary font-mono">
-                    {cityInfo.name}123
-                  </span>
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-sm font-medium text-muted-foreground">
+                  Credenciales de acceso:
+                </h4>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={loadCredentials}
+                  className="text-xs"
+                >
+                  Autocompletar
+                </Button>
+              </div>
+              <div className="space-y-2 text-xs">
+                <div className="bg-black/20 rounded p-2 border border-white/10">
+                  <div className="text-muted-foreground">Usuario:</div>
+                  <div className="text-primary font-mono">{cityInfo.defaultUser.username}</div>
+                </div>
+                <div className="bg-black/20 rounded p-2 border border-white/10">
+                  <div className="text-muted-foreground">Contraseña:</div>
+                  <div className="text-primary font-mono">{cityInfo.defaultUser.password}</div>
+                </div>
+                <div className="bg-black/20 rounded p-2 border border-white/10">
+                  <div className="text-muted-foreground">Administrador:</div>
+                  <div className="text-accent">{cityInfo.defaultUser.fullName}</div>
+                  <div className="text-xs text-muted-foreground">{cityInfo.defaultUser.role}</div>
                 </div>
               </div>
             </div>

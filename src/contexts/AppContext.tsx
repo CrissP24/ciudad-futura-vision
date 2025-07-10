@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type City = 'jipijapa' | 'puerto-lopez' | 'pajan';
@@ -11,6 +10,12 @@ export interface CityInfo {
   color: string;
   gradient: string;
   image: string;
+  defaultUser: {
+    username: string;
+    password: string;
+    fullName: string;
+    role: string;
+  };
 }
 
 export interface BlogPost {
@@ -56,7 +61,13 @@ const citiesData: CityInfo[] = [
     description: 'Ciudad de los tejidos y la hospitalidad manabita',
     color: 'bg-gradient-to-r from-yellow-400 to-orange-500',
     gradient: 'from-yellow-400/20 to-orange-500/20',
-    image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=600&fit=crop'
+    image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=600&fit=crop',
+    defaultUser: {
+      username: 'admin.jipijapa',
+      password: 'jipijapa2024',
+      fullName: 'María Elena Rodríguez',
+      role: 'Coordinadora SmartCity'
+    }
   },
   {
     id: 'puerto-lopez',
@@ -65,7 +76,13 @@ const citiesData: CityInfo[] = [
     description: 'Portal de entrada al Parque Nacional Machalilla',
     color: 'bg-gradient-to-r from-blue-400 to-cyan-500',
     gradient: 'from-blue-400/20 to-cyan-500/20',
-    image: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=800&h=600&fit=crop'
+    image: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=800&h=600&fit=crop',
+    defaultUser: {
+      username: 'admin.puertolopez',
+      password: 'puertolopez2024',
+      fullName: 'Carlos Mendoza Vera',
+      role: 'Director de Tecnología'
+    }
   },
   {
     id: 'pajan',
@@ -74,7 +91,13 @@ const citiesData: CityInfo[] = [
     description: 'Tierra de tradición y desarrollo sostenible',
     color: 'bg-gradient-to-r from-green-400 to-emerald-500',
     gradient: 'from-green-400/20 to-emerald-500/20',
-    image: 'https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=800&h=600&fit=crop'
+    image: 'https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=800&h=600&fit=crop',
+    defaultUser: {
+      username: 'admin.pajan',
+      password: 'pajan2024',
+      fullName: 'Ana Patricia Silva',
+      role: 'Gerente de Innovación'
+    }
   }
 ];
 
@@ -184,24 +207,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [isAuthenticated]);
 
   const login = (city: City, username: string, password: string): boolean => {
-    // Simulación de autenticación - en producción esto sería una llamada a API
-    const validCredentials = [
-      { city: 'jipijapa', username: 'admin', password: 'jipijapa123' },
-      { city: 'puerto-lopez', username: 'admin', password: 'puerto123' },
-      { city: 'pajan', username: 'admin', password: 'pajan123' }
-    ];
+    const cityInfo = citiesData.find(c => c.id === city);
+    if (!cityInfo) return false;
 
-    const isValid = validCredentials.some(
-      cred => cred.city === city && cred.username === username && cred.password === password
-    );
+    const isValid = cityInfo.defaultUser.username === username && 
+                   cityInfo.defaultUser.password === password;
 
     if (isValid) {
       setCurrentCity(city);
-      setCurrentUser(username);
+      setCurrentUser(cityInfo.defaultUser.fullName);
       setIsAuthenticated(true);
       localStorage.setItem('smartcity-auth', JSON.stringify({
         city,
-        user: username,
+        user: cityInfo.defaultUser.fullName,
         timestamp: Date.now()
       }));
       return true;
