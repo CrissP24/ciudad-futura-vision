@@ -10,6 +10,12 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import { LoginForm } from "@/components/LoginForm";
 import { Dashboard } from "@/components/Dashboard";
+import { BlogManagement } from "@/components/BlogManagement";
+import { UserManagement } from "@/components/UserManagement";
+import { Analytics } from "@/components/Analytics";
+import { Notifications } from "@/components/Notifications";
+import { Events } from "@/components/Events";
+import { Settings } from "@/components/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +37,54 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <Dashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/dashboard/blog" 
+                element={
+                  <ProtectedRoute>
+                    <BlogManagement />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/dashboard/users" 
+                element={
+                  <ProtectedRoute>
+                    <UserManagement />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/dashboard/analytics" 
+                element={
+                  <ProtectedRoute>
+                    <Analytics />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/dashboard/notifications" 
+                element={
+                  <ProtectedRoute>
+                    <Notifications />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/dashboard/events" 
+                element={
+                  <ProtectedRoute>
+                    <Events />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/dashboard/settings" 
+                element={
+                  <ProtectedRoute>
+                    <Settings />
                   </ProtectedRoute>
                 } 
               />
